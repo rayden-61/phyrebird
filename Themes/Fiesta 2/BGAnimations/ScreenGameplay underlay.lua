@@ -17,10 +17,10 @@ local function GetStageNumberActor()
 			InitCommand=cmd(FromTop,28);
 		};
 		LoadActor( THEME:GetPathG("","ScreenGameplay/N_FM") ).. {
-			InitCommand=cmd(x,-12;FromTop,34;pause;setstate,first_digit);
+			InitCommand=cmd(zoom, .5;x,-12;FromTop,34;pause;setstate,first_digit);
 		};
 		LoadActor( THEME:GetPathG("","ScreenGameplay/N_FM") ).. {
-			InitCommand=cmd(x,12;FromTop,34;pause;setstate,second_digit);
+			InitCommand=cmd(zoom, .5;x,12;FromTop,34;pause;setstate,second_digit);
 		};
 	};
 end;

@@ -748,7 +748,6 @@ function GetPHighScoresFrame( pn, appear_on_start )
 	return t;
 	end;
 
-
 -----------------------------------------------------------------------
 -----------------------------------------------------------------------
 --///////////////////////////////////////////////////////////////
@@ -879,6 +878,7 @@ local function GetBallLabel(cur_steps)
 		return GetLabelNumber( cur_steps:GetLabel() );
 	end
 end;
+
 -- Obtiene la etiqueta inferior para mostrar en la esfera
 local function GetBallUnderLabel( cur_steps )
 	local style = cur_steps:GetStepsType();
@@ -891,9 +891,8 @@ local function GetBallUnderLabel( cur_steps )
 		return 2; --empty
 end;
 
-
 -- Funci�n para obtener la esfera de nivel
-function GetBallLevel( pn, show_dir_arrows )
+function GetBallLevelText( pn, show_dir_arrows )
 	local cur_steps = GAMESTATE:GetCurrentSteps(pn);
 	local active_show = 0;
 	local chartstyle = "";
@@ -917,8 +916,8 @@ function GetBallLevel( pn, show_dir_arrows )
 			if string.find(chartstyle,"ACTIVE") then active_show = 1 end;
 			
 			-- Actualizo color esfera de nivel
-			(cmd(stoptweening;diffusealpha,1;setstate,GetDiffNumberBall(cur_steps)))( this.Bigballs );
-			
+			(cmd(stoptweening;diffusealpha,1;setstate,GetDiffNumberBall(cur_steps)))( this.Bigballstitle );			
+
 			-- Actualizo digitos de nivel
 			(cmd(stoptweening;diffusealpha,1;SetLevelTextByDigit,cur_steps,1))( this.LevelDigit1 );
 			(cmd(stoptweening;diffusealpha,1;SetLevelTextByDigit,cur_steps,2))( this.LevelDigit2 );
@@ -927,85 +926,51 @@ function GetBallLevel( pn, show_dir_arrows )
 			(cmd(stoptweening;diffusealpha,1;sleep,.03;setstate,GetBallLabel(cur_steps)))( this.Label );
 			(cmd(stoptweening;diffusealpha,1;sleep,.03;setstate,GetBallUnderLabel(cur_steps)))( this.Underlabel );
 		end;
-		children = {
-			
-
-			--[[LoadActor( THEME:GetPathG("","ScreenSelectMusic/bigball_active.png") )..{
-				InitCommand=cmd(diffusealpha,active_show;glowshift;pause);
-				UpdateCommand=function(self,params)
-					self:diffusealpha(active_show);
-					self:glowshift();
-					self:stoptweening();
-				end;
-				UpdateInternalCommand=function(self)
-					self:diffusealpha(active_show);
-					self:glowshift();
-					self:stoptweening();
-				end;
-			};--]]
-			
-			-- Glow Spin --
-			LoadActor( THEME:GetPathG("","ScreenSelectMusic/Difficulty_Bigballs glow spin.png") )..{
-				InitCommand=cmd(blend,'BlendMode_Add';diffuse,0,1,1,1);
-				OffCommand=cmd(stoptweening;diffusealpha,0);
-				ShowUpInternalCommand=cmd(stoptweening;diffusealpha,0;sleep,.2;queuecommand,'Spin');
-				UpdateInternalCommand=cmd(stoptweening;queuecommand,'Spin');
-				SpinCommand=cmd(stoptweening;diffusealpha,.8;rotationz,0;linear,.2;rotationz,360;diffusealpha,0);
-			};
-			
-			LoadActor( THEME:GetPathG("","ScreenSelectMusic/Difficulty_Bigballs glow spin.png") )..{
-				InitCommand=cmd(blend,'BlendMode_Add');
-				OffCommand=cmd(stoptweening;diffusealpha,0);
-				ShowUpInternalCommand=cmd(stoptweening;diffusealpha,0;sleep,.4;queuecommand,'Spin');
-				HideInternalCommand=cmd(stoptweening;diffusealpha,0);
-				SpinCommand=cmd(stoptweening;diffusealpha,.1;rotationz,0;linear,2;rotationz,360;queuecommand,'Spin');
-			};
-			
-			-- Esfera del nivel --
-			LoadActor( THEME:GetPathG("","ScreenSelectMusic/Difficulty_Bigballs 4x2.png") )..{
-				Name="Bigballs";
-				InitCommand=cmd(pause);
+		children = {						
+			LoadActor( THEME:GetPathG("","ScreenSelectMusic/Difficulty_BigBalls_Titles 4x2.png") )..{
+				Name="Bigballstitle";
+				InitCommand=cmd(pause;zoom,.75);
 			};
 			
 			-- Level (numeros) Digit 1 --
 			LoadActor( THEME:GetPathG("","ScreenSelectMusic/Difficulty_Bigballs numbers 13x7.png") )..{
 				Name="LevelDigit1";
-				InitCommand=cmd(y,2;pause;x,-22);
+				InitCommand=cmd(y,5;pause;zoom,.75;x,-25);
 			};
 			
 			-- Level (numeros) Digit 2 --
 			LoadActor( THEME:GetPathG("","ScreenSelectMusic/Difficulty_Bigballs numbers 13x7.png") )..{
 				Name="LevelDigit2";
-				InitCommand=cmd(y,2;pause;x,22);
+				InitCommand=cmd(y,5;pause;x,28;zoom,.75);
 			};
 			
-			-- Big glow
-			LoadActor( THEME:GetPathG("","ScreenSelectMusic/Difficulty_Bigballs bigglow.png") )..{
-				InitCommand=cmd(blend,'BlendMode_Add';diffusealpha,0;visible,show_dir_arrows);
-				OffCommand=cmd(stoptweening;diffusealpha,0;linear,.05;diffusealpha,.5;zoom,1;linear,.2;zoomx,1.5;diffusealpha,0);
-			};
+			-- -- Big glow
+			-- LoadActor( THEME:GetPathG("","ScreenSelectMusic/Difficulty_Bigballs bigglow.png") )..{
+			-- 	InitCommand=cmd(blend,'BlendMode_Add';diffusealpha,0;visible,show_dir_arrows);
+			-- 	OffCommand=cmd(stoptweening;diffusealpha,0;linear,.05;diffusealpha,.5;zoom,1;linear,.2;zoomx,1.5;diffusealpha,0);
+			-- };
 			
-			-- Glow Side to side --
-			LoadActor( THEME:GetPathG("","ScreenSelectMusic/Difficulty_Bigballs glow sidetoside.png") )..{
-				InitCommand=cmd(blend,'BlendMode_Add';diffuse,0,1,1,1);
-				ShowUpInternalCommand=cmd(stoptweening;diffusealpha,0;zoom,1;horizalign,center;x,0;sleep,.2;diffusealpha,1;linear,.2;diffusealpha,0);
-				HideInternalCommand=cmd(stoptweening;diffusealpha,0);
-				OffCommand=cmd(stoptweening;diffusealpha,0);
-				UpdateInternalCommand=function(self,params)
-					if params.Direction == -1 then	--der
-						(cmd(stoptweening;horizalign,left;diffusealpha,0;zoomx,0;x,-55;linear,.1;zoomx,1;diffusealpha,1))(self);
-						(cmd(horizalign,right;diffusealpha,1;zoomx,1;x,55;linear,.1;zoomx,0;diffusealpha,0))(self);
-					elseif params.Direction == 1 then	--izq
-						(cmd(stoptweening;horizalign,right;diffusealpha,0;zoomx,0;x,55;linear,.1;zoomx,1;diffusealpha,1))(self);
-						(cmd(horizalign,left;diffusealpha,1;zoomx,1;x,-55;linear,.1;zoomx,0;diffusealpha,0))(self);
-					end;
-				end;
-			};
+			-- -- Glow Side to side --
+			-- LoadActor( THEME:GetPathG("","ScreenSelectMusic/Difficulty_Bigballs glow sidetoside.png") )..{
+			-- 	InitCommand=cmd(blend,'BlendMode_Add';diffuse,0,1,1,1);
+			-- 	ShowUpInternalCommand=cmd(stoptweening;diffusealpha,0;zoom,1;horizalign,center;x,0;sleep,.2;diffusealpha,1;linear,.2;diffusealpha,0);
+			-- 	HideInternalCommand=cmd(stoptweening;diffusealpha,0);
+			-- 	OffCommand=cmd(stoptweening;diffusealpha,0);
+			-- 	UpdateInternalCommand=function(self,params)
+			-- 		if params.Direction == -1 then	--der
+			-- 			(cmd(stoptweening;horizalign,left;diffusealpha,0;zoomx,0;x,-55;linear,.1;zoomx,1;diffusealpha,1))(self);
+			-- 			(cmd(horizalign,right;diffusealpha,1;zoomx,1;x,55;linear,.1;zoomx,0;diffusealpha,0))(self);
+			-- 		elseif params.Direction == 1 then	--izq
+			-- 			(cmd(stoptweening;horizalign,right;diffusealpha,0;zoomx,0;x,55;linear,.1;zoomx,1;diffusealpha,1))(self);
+			-- 			(cmd(horizalign,left;diffusealpha,1;zoomx,1;x,-55;linear,.1;zoomx,0;diffusealpha,0))(self);
+			-- 		end;
+			-- 	end;
+			-- };
 			
 			-- Labels --
 			LoadActor( THEME:GetPathG("","Common Resources/B_LABELS 1x13.png") )..{
 				Name="Label";
-				InitCommand=cmd(y,-45;pause;setstate,10;zoom,0.6);
+				InitCommand=cmd(y,-45;pause;setstate,10; zoom, 0.6);
 				--OffCommand=cmd(stoptweening;diffusealpha,1;sleep,.2;linear,.05;diffusealpha,0);
 			};
 			
@@ -1014,40 +979,6 @@ function GetBallLevel( pn, show_dir_arrows )
 				Name="Underlabel";
 				InitCommand=cmd(y,40;pause;setstate,2);
 				--OffCommand=cmd(stoptweening;diffusealpha,1;sleep,.2;linear,.05;diffusealpha,0);
-			};
-			
-			-- Right Arrow --
-			LoadActor( THEME:GetPathG("","ScreenSelectMusic/Difficulty_BigBalls arrow.png") )..{
-				InitCommand=cmd(x,70;zoom,1;rotationy,180;diffusealpha,0;visible,show_dir_arrows);
-				UpdateInternalCommand=function(self,params)
-					if params.Direction == 1 then	--der
-						(cmd(finishtweening;zoom,1;x,80;linear,.05;x,90;sleep,.04;linear,.05;x,80;queuecommand,'Loop'))(self);
-					elseif params.Direction == -1 then	--izq
-						(cmd(finishtweening;zoom,1;x,80;sleep,.05;sleep,.04;sleep,.05;queuecommand,'Loop'))(self);
-					end;
-				end;
-				StepsChosenInternalCommand=cmd(finishtweening;queuecommand,'Loop');
-				LoopCommand=cmd(finishtweening;x,80;linear,1;x,85;linear,1;x,80;queuecommand,'Loop');
-				ShowUpInternalCommand=cmd(stoptweening;x,80;diffusealpha,0;zoom,0;sleep,.2;linear,.1;diffusealpha,1;zoom,1.1;linear,.1;zoom,1;queuecommand,'Loop');
-				HideInternalCommand=cmd(stoptweening;diffusealpha,1;zoom,1;x,80;linear,.1;zoom,1.1;linear,.1;zoom,0;diffusealpha,0);
-				OffCommand=cmd(stoptweening;diffusealpha,1;zoom,1;x,80;linear,.2;zoom,0;diffusealpha,0);	
-			};
-			
-			-- Left Arrow --
-			LoadActor( THEME:GetPathG("","ScreenSelectMusic/Difficulty_BigBalls arrow.png") )..{
-				InitCommand=cmd(x,-80;diffusealpha,0;visible,show_dir_arrows);
-				UpdateInternalCommand=function(self,params)
-					if params.Direction == -1 then	--der
-						(cmd(finishtweening;x,-80;linear,.05;x,-90;sleep,.04;linear,.05;x,-80;queuecommand,'Loop'))(self);
-					elseif params.Direction == 1 then	--izq
-						(cmd(finishtweening;x,-80;sleep,.05;sleep,.04;sleep,.05;queuecommand,'Loop'))(self);
-					end;
-				end;
-				StepsChosenInternalCommand=cmd(finishtweening;queuecommand,'Loop');
-				LoopCommand=cmd(finishtweening;x,-80;linear,1;x,-85;linear,1;x,-80;queuecommand,'Loop');
-				ShowUpInternalCommand=cmd(stoptweening;x,-80;diffusealpha,0;zoom,0;sleep,.2;linear,.1;diffusealpha,1;zoom,1.1;linear,.1;zoom,1;queuecommand,'Loop');
-				HideInternalCommand=cmd(stoptweening;diffusealpha,1;zoom,1;x,-80;linear,.1;zoom,1.1;linear,.1;zoom,0;diffusealpha,0);
-				OffCommand=cmd(stoptweening;diffusealpha,1;zoom,1;x,-80;linear,.2;zoom,0;diffusealpha,0);		
 			};
 			
 			-- READY? --
@@ -1073,6 +1004,53 @@ function GetBallLevel( pn, show_dir_arrows )
 	return k;
 end;
 
+function GetBallLevelColor( pn, show_dir_arrows )
+	local cur_steps = GAMESTATE:GetCurrentSteps(pn);
+	local active_show = 0;
+	local chartstyle = "";
+	local k = Def.ActorFrame {		
+		InitCommand=cmd(basezoom,.67);
+		ShowUpCommand=cmd(playcommand,"Update";playcommand,'ShowUpInternal');
+		HideCommand=cmd(playcommand,'HideInternal');
+		StepsChosenMessageCommand=function(self,params)
+			if params.Player == pn then self:playcommand('StepsChosenInternal'); end;
+		end;
+		ChangeStepsMessageCommand=function(self,params)
+			if params.Player ~= pn then return; end;
+			self:playcommand('Update');
+			self:playcommand('UpdateInternal',{Direction = params.Direction});
+			end;
+		UpdateCommand=function(self)
+			local this = self:GetChildren();
+			cur_steps = GAMESTATE:GetCurrentSteps(pn);
+			active_show = 0;
+			chartstyle = cur_steps:GetChartStyle();
+			if string.find(chartstyle,"ACTIVE") then active_show = 1 end;
+			
+			-- Actualizo color esfera de nivel
+			(cmd(stoptweening;diffusealpha,1;setstate,GetDiffNumberBall(cur_steps)))( this.Bigballs );			
+		end;
+		children = {
+			
+
+			
+			-- Esfera del nivel --
+			LoadActor( THEME:GetPathG("","ScreenSelectMusic/Difficulty_Bigballs 4x2.png") )..{
+				Name="Bigballs";
+				InitCommand=cmd(pause;basezoom,.75);
+			};	
+			
+			-- -- Big glow
+			-- LoadActor( THEME:GetPathG("","ScreenSelectMusic/Difficulty_Bigballs bigglow.png") )..{
+			-- 	InitCommand=cmd(blend,'BlendMode_Add';diffusealpha,0;visible,show_dir_arrows);
+			-- 	OffCommand=cmd(stoptweening;diffusealpha,0;linear,.05;diffusealpha,.5;zoom,1;linear,.2;zoomx,1.5;diffusealpha,0);
+			-- };
+		};
+	};
+
+	return k;
+end;
+
 
 -- Simplified Ball
 function GetSimpleBallLevel( pn )
@@ -1088,33 +1066,29 @@ function GetSimpleBallLevel( pn )
 			(cmd(stoptweening;diffusealpha,1;setstate,GetSimpleDiffNumberBall(cur_steps);basezoom,2))( this.Bigballs );
 			
 			-- Actualizo digitos de nivel
-			(cmd(stoptweening;diffusealpha,1;SetLevelTextByDigit,cur_steps,1))( this.LevelDigit1 );
-			(cmd(stoptweening;diffusealpha,1;SetLevelTextByDigit,cur_steps,2))( this.LevelDigit2 );
+			(cmd(zoom, .75;stoptweening;diffusealpha,1;SetLevelTextByDigit,cur_steps,1))( this.LevelDigit1 );
+			(cmd(zoom, .75;stoptweening;diffusealpha,1;SetLevelTextByDigit,cur_steps,2))( this.LevelDigit2 );
 			
 		end;
 		children = {
-			-- Frame --
-			LoadActor( THEME:GetPathG("","ScreenSelectMusic/Difficulty_Bigballs frame.png") )..{
-				InitCommand=cmd(pause);
-				UpdateInternalCommand=cmd(stoptweening;diffusealpha,1);
-			};
+
 			
-			-- Glow Spin --
-			LoadActor( THEME:GetPathG("","ScreenSelectMusic/Difficulty_Bigballs glow spin.png") )..{
-				InitCommand=cmd(blend,'BlendMode_Add';diffuse,0,1,1,1);
-				OffCommand=cmd(stoptweening;diffusealpha,0);
-				ShowUpInternalCommand=cmd(stoptweening;diffusealpha,0;sleep,.2;queuecommand,'Spin');
-				UpdateInternalCommand=cmd(stoptweening;queuecommand,'Spin');
-				SpinCommand=cmd(stoptweening;diffusealpha,.8;rotationz,0;linear,.2;rotationz,360;diffusealpha,0);
-			};
+			-- -- Glow Spin --
+			-- LoadActor( THEME:GetPathG("","ScreenSelectMusic/Difficulty_Bigballs glow spin.png") )..{
+			-- 	InitCommand=cmd(blend,'BlendMode_Add';diffuse,0,1,1,1);
+			-- 	OffCommand=cmd(stoptweening;diffusealpha,0);
+			-- 	ShowUpInternalCommand=cmd(stoptweening;diffusealpha,0;sleep,.2;queuecommand,'Spin');
+			-- 	UpdateInternalCommand=cmd(stoptweening;queuecommand,'Spin');
+			-- 	SpinCommand=cmd(stoptweening;diffusealpha,.8;rotationz,0;linear,.2;rotationz,360;diffusealpha,0);
+			-- };
 			
-			LoadActor( THEME:GetPathG("","ScreenSelectMusic/Difficulty_Bigballs glow spin.png") )..{
-				InitCommand=cmd(blend,'BlendMode_Add');
-				OffCommand=cmd(stoptweening;diffusealpha,0);
-				ShowUpInternalCommand=cmd(stoptweening;diffusealpha,0;sleep,.4;queuecommand,'Spin');
-				HideInternalCommand=cmd(stoptweening;diffusealpha,0);
-				SpinCommand=cmd(stoptweening;diffusealpha,.1;rotationz,0;linear,2;rotationz,360;queuecommand,'Spin');
-			};
+			-- LoadActor( THEME:GetPathG("","ScreenSelectMusic/Difficulty_Bigballs glow spin.png") )..{
+			-- 	InitCommand=cmd(blend,'BlendMode_Add');
+			-- 	OffCommand=cmd(stoptweening;diffusealpha,0);
+			-- 	ShowUpInternalCommand=cmd(stoptweening;diffusealpha,0;sleep,.4;queuecommand,'Spin');
+			-- 	HideInternalCommand=cmd(stoptweening;diffusealpha,0);
+			-- 	SpinCommand=cmd(stoptweening;diffusealpha,.1;rotationz,0;linear,2;rotationz,360;queuecommand,'Spin');
+			-- };
 			
 			-- Esfera del nivel --
 			LoadActor( THEME:GetPathG("","ScreenSelectMusic/fullbar balls 7x1.png") )..{
@@ -1229,4 +1203,3 @@ function IsGroupOfficial()
 		return false;
 	end
 end;
-

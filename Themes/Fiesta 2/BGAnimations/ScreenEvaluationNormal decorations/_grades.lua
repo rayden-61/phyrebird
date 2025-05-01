@@ -92,24 +92,29 @@ end;
 
 -- Sounds
 local BestGrade;
+local BestGradeCondition;
 
 if p1_joined and p2_joined then
 	if p1_grade > p2_grade then
 		BestGrade = p2_grade;
+		BestGradeCondition = PLAYER_2;
 	else
 		BestGrade = p1_grade;
+		BestGradeCondition = PLAYER_1;
 	end;
 end;
 
 if p1_joined and not p2_joined then
 	BestGrade = p1_grade;
+	BestGradeCondition = PLAYER_1;
 end;
 
 if not p1_joined and p2_joined then
 	BestGrade = p2_grade;
+	BestGradeCondition = PLAYER_2;
 end;
 
-local condition = stage_break[pn] and "_B" or "_R"
+local condition = stage_break[BestGradeCondition] and "_B" or "_R"
 local tier = piu_grades_tier[BestGrade];
 
 t[#t+1] = Def.Sound {

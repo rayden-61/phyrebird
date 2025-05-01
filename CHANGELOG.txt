@@ -1,3 +1,10 @@
+StepP1 Plus Phyrebird alpha 1 - 04/03/2025
+- Aesthetic changes to the evaluation screen to make it look a bit more like Phoenix
+- New phoenix style difficulty balls
+- Changed the "active chart" logic. Now, charts present on current mix will have no label, and removed charts/songs will have the "Legacy" label. Any chart on non official folders will automatically receive the UCS label.
+- Added QR-Code support, but the backend is still not functional.
+- Switched default Noteskin to Phoenix
+
 StepP1 Plus v2.0.0 Release - 31/03/2024
 - Removed Old Score and Grade, as well as colored A grades. Now P.Score and P.Grade are the main grade systems. This was necessary in order to fix bugs with high score priority and to enable stage break/stage pass logging.
 - Added capability of recording the Stage Break / Stage Pass status of high scores. Stage Pass scores will always replace Stage Break scores. Stage Break will be displayed as broken letters on the song select screen.

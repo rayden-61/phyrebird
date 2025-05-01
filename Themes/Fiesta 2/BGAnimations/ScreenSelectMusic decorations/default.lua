@@ -35,7 +35,7 @@ if GAMESTATE:IsSideJoined( PLAYER_1 ) then
 			local stepartist = GAMESTATE:GetCurrentSteps(PLAYER_1):GetAuthorCredit();
 			local bytext = "";
 			if string.len(stepartist) >= 1 then bytext = "by" end;
-			(cmd(settext,bytext;x,cx-90;y,SCREEN_BOTTOM-42;zoom,.5;visible,true))(self);
+			(cmd(settext,bytext;x,cx-90;y,SCREEN_BOTTOM-22;zoom,.5;visible,true))(self);
 		end;
 		StartSelectingStepsMessageCommand=cmd(stoptweening;playcommand,'UpdateVisibility');
 		ChangeStepsMessageCommand=cmd(stoptweening;playcommand,'UpdateVisibility');
@@ -52,7 +52,7 @@ if GAMESTATE:IsSideJoined( PLAYER_1 ) then
 			end;
 			self:settext( stepartist );
 			self:maxwidth(216);
-			(cmd(x,cx-90;y,SCREEN_BOTTOM-32;zoom,.5;visible,true))(self);
+			(cmd(x,cx-90;y,SCREEN_BOTTOM-12;zoom,.5;visible,true))(self);
 		end;
 		ChangeStepsMessageCommand=cmd(stoptweening;playcommand,'FetchAuthor');
 		GoBackSelectingSongMessageCommand=cmd(stoptweening;visible,false);
@@ -72,7 +72,7 @@ if GAMESTATE:IsSideJoined( PLAYER_2 ) then
 			local stepartist = GAMESTATE:GetCurrentSteps(PLAYER_2):GetAuthorCredit();
 			local bytext = "";
 			if string.len(stepartist) >= 1 then bytext = "by" end;
-			(cmd(settext,bytext;x,cx+90;y,SCREEN_BOTTOM-42;zoom,.5;visible,true))(self);
+			(cmd(settext,bytext;x,cx+90;y,SCREEN_BOTTOM-22;zoom,.5;visible,true))(self);
 		end;
 		StartSelectingStepsMessageCommand=cmd(stoptweening;playcommand,'UpdateVisibility');
 		ChangeStepsMessageCommand=cmd(stoptweening;playcommand,'UpdateVisibility');
@@ -89,7 +89,7 @@ if GAMESTATE:IsSideJoined( PLAYER_2 ) then
 			end;
 			self:settext( stepartist );
 			self:maxwidth(216);
-			(cmd(x,cx+90;y,SCREEN_BOTTOM-32;zoom,.5;visible,true))(self);
+			(cmd(x,cx+90;y,SCREEN_BOTTOM-12;zoom,.5;visible,true))(self);
 		end;
 		ChangeStepsMessageCommand=cmd(stoptweening;playcommand,'FetchAuthor');
 		GoBackSelectingSongMessageCommand=cmd(stoptweening;visible,false);
@@ -200,12 +200,26 @@ end;
 --------------------------------------------------------------------------------------------------
 --TIMER
 -- DrawOrder = 1
-t[#t+1] = LoadActor("_timer")..{
+--[[t[#t+1] = LoadActor("_timer")..{
 	OnCommand=cmd(x,cx;y,-10;decelerate,.1;y,10;decelerate,.1;y,2);
 	OffCommand=cmd(x,cx;y,0;decelerate,.1;y,10;decelerate,.1;y,-58);
 	TimerOutSelectingSongCommand=cmd(playcommand,'Off');
 	TimerOutSelectingGroupCommand=cmd(playcommand,'Off');
+};--]]
+
+t[#t+1] = LoadActor(THEME:GetPathG("","Common Resources/TIMER_MASK.png") )..{
+	OnCommand=cmd(zoom,0.05;x,cx;y,22;play;MaskSource);
 };
+
+t[#t+1] = LoadActor(THEME:GetPathG("","Common Resources/TIMER_FRAME.mpg") )..{
+	OnCommand=cmd(zoom,0.05;x,cx;y,22;play;MaskDest);
+};
+
+--loading twice to speed up the animation (exploiting an ffmpeg bug)
+t[#t+1] = LoadActor(THEME:GetPathG("","Common Resources/TIMER_FRAME.mpg") )..{
+	OnCommand=cmd(zoom,0.05;x,cx;y,22;play;MaskDest);
+};
+
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

@@ -638,9 +638,14 @@ t[#t+1] = LoadActor( THEME:GetPathG("","ScreenSelectMusic/hs_glow_machine.png") 
 	OffCommand=cmd(finishtweening;visible,false);
 };
 
-t[#t+1] = GetBallLevel( PLAYER_1, false )..{ 
+t[#t+1] = GetBallLevelColor( PLAYER_1, false )..{ 
 	InitCommand=cmd(basezoom,.50;x,SCREEN_CENTER_X-135;playcommand,"ShowUp";y,SCREEN_TOP+150;linear,.2;); 
 	OffCommand=cmd(stoptweening;playcommand,"Hide";y,SCREEN_BOTTOM-100;sleep,0;linear,.2;y,SCREEN_BOTTOM+100;queuecommand,'HideOnCommand')
+};
+
+t[#t+1] = GetBallLevelText( PLAYER_1, false )..{ 
+	InitCommand=cmd(basezoom,.50;x,SCREEN_CENTER_X-135;playcommand,"ShowUp";y,SCREEN_TOP+150;linear,.2;); 
+	OffCommand=cmd(stoptweening;playcommand,"Hide";y,SCREEN_BOTTOM-100;sleep,0;linear,.2;y,SCREEN_BOTTOM+100;queuecommand,'HideOnCommand') -- Quando sai da tela
 };
 
 if STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):IsDisqualified() then
@@ -704,7 +709,12 @@ t[#t+1] = LoadActor( THEME:GetPathG("","ScreenSelectMusic/hs_glow_machine.png") 
 	OffCommand=cmd(finishtweening;visible,false);
 };
 
-t[#t+1] = GetBallLevel( PLAYER_2, false )..{ 
+t[#t+1] = GetBallLevelColor( PLAYER_2, false )..{ 
+	InitCommand=cmd(basezoom,.50;x,SCREEN_CENTER_X+135;playcommand,"ShowUp";y,SCREEN_TOP+150;linear,.2;zoomx,-1); 
+	OffCommand=cmd(stoptweening;playcommand,"Hide";y,SCREEN_BOTTOM-100;sleep,0;linear,.2;y,SCREEN_BOTTOM+100;queuecommand,'HideOnCommand') -- Quando sai da tela
+};
+
+t[#t+1] = GetBallLevelText( PLAYER_2, false )..{ 
 	InitCommand=cmd(basezoom,.50;x,SCREEN_CENTER_X+135;playcommand,"ShowUp";y,SCREEN_TOP+150;linear,.2;); 
 	OffCommand=cmd(stoptweening;playcommand,"Hide";y,SCREEN_BOTTOM-100;sleep,0;linear,.2;y,SCREEN_BOTTOM+100;queuecommand,'HideOnCommand') -- Quando sai da tela
 };
@@ -746,7 +756,22 @@ t[#t+1] = LoadActor( "_recordplates.lua" )..{
 	OffCommand=cmd(stoptweening;visible,false);
 };
 
+
+
 -- Timer
+t[#t+1] = LoadActor(THEME:GetPathG("","Common Resources/TIMER_MASK.png") )..{
+	OnCommand=cmd(zoom,0.05;x,cx;y,22;play;MaskSource;);
+};
+
+t[#t+1] = LoadActor(THEME:GetPathG("","Common Resources/TIMER_FRAME.mpg") )..{
+	OnCommand=cmd(zoom,0.05;x,cx;y,22;play;MaskDest;);
+};
+
+--loading twice to speed up the animation (exploiting an ffmpeg bug)
+t[#t+1] = LoadActor(THEME:GetPathG("","Common Resources/TIMER_FRAME.mpg") )..{
+	OnCommand=cmd(zoom,0.05;x,cx;y,22;play;MaskDest;);
+};
+
 t[#t+1] = Def.ActorProxy {
 	BeginCommand=function(self) 
 		local Timer = SCREENMAN:GetTopScreen():GetChild('Timer'); 
