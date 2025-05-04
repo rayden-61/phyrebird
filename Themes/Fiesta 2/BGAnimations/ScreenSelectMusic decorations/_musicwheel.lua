@@ -1,30 +1,17 @@
 local t = Def.ActorFrame {}
 
-local debugMessages = {} -- Lista para armazenar mensagens de debug
-local maxDebugLines = 20 -- Número máximo de mensagens visíveis na tela
-
--- Função para adicionar mensagens ao debug
-local function AddDebugMessage(text)
-    if debugMessages[#debugMessages] ~= text then -- Verifica se a nova mensagem é diferente da última mensagem
-        table.insert(debugMessages, text) -- Adiciona nova mensagem
-        if #debugMessages > maxDebugLines then
-            table.remove(debugMessages, 1) -- Remove a mais antiga se passar do limite
-        end
-    end
-end
-
--- Função para atualizar o texto de debug com as mensagens
-local function UpdateDebugText(debugTextActor)
-    local msg = table.concat(debugMessages, "\n")
-    debugTextActor:settext(msg)
-end
-
-local arrayPosition = {1, 2, 3, 4, 8, 7, 6, 5}
+local arrayPosition = {1, 2, 3, 4, 8, 7, 6, 5} -- Itens na tela, apesar de aparecerem 7 a tela possui 8 itens (Banners)
+-- Então criei esse Array pra garantir que os banners estejam sempre nessas posições. E sim, é essa sequencia torta mesmo 1,2,3,4,8,7,6,5
 local positionIndex = 5 -- Posição inicial, que é o índice do valor central (8)
-local firstPreviousActivation = true
-local firstNextActivation = false
-local previousPositionItem
-local isPrevious = false
+local firstPreviousActivation = true -- PreviousActivation tem estar em true ao iniciar
+local firstNextActivation = false -- NextActivation tem q estar em false ao iniciar
+local previousPositionItem -- Varíavel a ser utilizada nas funções
+local isPrevious = false -- Verificador se a tecla de PreviousSong foi pressionada, inicia em false.
+local yPositionBase = 345 -- Posição inicial da MusicWheel
+ 
+
+-- A partir daqui foi um teste para tentar aproximar mais os banners pois eles ficam bem afastados...
+-- Caso alguém tenha alguma ideia, podem mexer e testar. Comigo os Banners ficaram malucos.
 
 -- local offsets = {
 --     -- [4] = { x = 145, rotation = 45 },
@@ -89,7 +76,7 @@ local isPrevious = false
 --     end
 -- end
 
--- Função para atualizar a posição e rotação dos itens
+-- Função para atualizar a posição e rotação dos itens (Antiga função, não deve mais funcionar)
 -- function UpdateItemPositions()
 --     local screen = SCREENMAN:GetTopScreen()
 --     local musicWheel = screen:GetChild("MusicWheel")
@@ -104,8 +91,7 @@ local isPrevious = false
 --         end
 --     end
 -- end
--- VERIFICAR POSIBILIDADE DE USAR O VALUE INVÉS DO BANNER 
--- VERIFICAR A SAIDA DA MUSICWHEEL DA TELA E O ITEM ATIVO NÃO SUBIR QUANDO FOR SELECIONADO
+-- !!! VERIFICAR POSIBILIDADE DE USAR O VALUE INVÉS DO BANNER !!!
 
 -- Função para ajustar os banners na inicialização
 local function AdjustBanners()
@@ -116,32 +102,28 @@ local function AdjustBanners()
     local musicWheelItem = musicWheel:GetChild("MusicWheelItem")
     if not musicWheelItem then return end
 
-    -- AddDebugMessage("---> " .. tostring(screen) .. " no Index: " .. tostring(musicWheel:GetCurrentIndex()))
     local index = tonumber(musicWheel:GetCurrentIndex())
     
-
     for key, value in pairs(musicWheelItem) do
         if tonumber(key) then
             local banner = value:GetChild("Banner")
             if banner then
                 banner:stoptweening()
-                banner:zoomto(115, 82) -- Tamanho correto
-                banner:rotationy(0) -- Resetar rotação
+                banner:zoomto(115, 82) -- Tamanho correto (Phoenix)
+                banner:rotationy(0) -- Resetar rotação para não ocorrer rotação de banner errado
                 banner:y(0)
             end
         end
     end
-
-
 end
 
--- Função para atualizar a MusicWheel
+-- Função para atualizar a MusicWheel e rotacionar o banner que está entrando no centro ao trocar de musica
 local function RotationBanner(positionIndex, rotationY, isPrevious)
     AdjustBanners()
     local screen = SCREENMAN:GetTopScreen()
     local musicWheel = screen:GetChild("MusicWheel")
     local musicWheelItem = musicWheel:GetChild("MusicWheelItem")
-    -- Determinar qual item está saindo do centro antes da mudança
+    -- Determinar qual item está saindo do centro antes da mudança, sem esse comparativo os banners deslocam de posição
         local previousPositionIndex
         if isPrevious then
                 previousPositionIndex = (positionIndex + 1) % #arrayPosition
@@ -155,20 +137,15 @@ local function RotationBanner(positionIndex, rotationY, isPrevious)
     
         local positionItem = arrayPosition[positionIndex]
         local previousPositionItem = arrayPosition[previousPositionIndex] -- Item que estava no centro antes    
-    -- AddDebugMessage("Position Item na posição: " .. positionItem)
     for key, value in pairs(musicWheelItem) do
         if tonumber(key) == positionItem then
-            -- AddDebugMessage("Key= " .. tonumber(key) .. " positionItem= " .. positionItem)
             local banner = value:GetChild("Banner")
             if banner then
-                --AddDebugMessage("Banner encontrado na posição " .. tostring(key))
                 banner:finishtweening()
                 banner:linear(.3)
                 banner:y(25)
                 banner:rotationy(banner:GetRotationY() + rotationY)
                 banner:queuecommand("RepeatRotate")
-
-                --AddDebugMessage("Banner do item central girando")
             end
         elseif tonumber(key) == previousPositionItem then
             -- O item que está saindo do centro: faz a transição suave para Y(0)
@@ -182,18 +159,15 @@ local function RotationBanner(positionIndex, rotationY, isPrevious)
             
         end
     end
-    AddDebugMessage("---> " .. tostring(screen) .. " no Index: " .. tostring(musicWheel:GetCurrentIndex()))
-
 end
 
-local function ExitBanners() 
+local function ExitBanners() -- Função para saída dos Banners da tela
     local screen = SCREENMAN:GetTopScreen()
     local musicWheel = screen:GetChild("MusicWheel")
     local musicWheelItem = musicWheel:GetChild("MusicWheelItem")
 
     for key, value in pairs(musicWheelItem) do
         if firstNextActivation then
-            -- AddDebugMessage(">>>> " .. positionIndex)
             if tonumber(key) == arrayPosition[(positionIndex + 1 - 1) % #arrayPosition + 1] then
                 local banner = value:GetChild("Banner")
                 if banner then
@@ -230,8 +204,7 @@ local function ExitBanners()
 
 end
 
-local function EnterBanners() 
-
+local function EnterBanners() -- Função para entrada dos Banners
     local screen = SCREENMAN:GetTopScreen()
     local musicWheel = screen:GetChild("MusicWheel")
     local musicWheelItem = musicWheel:GetChild("MusicWheelItem")
@@ -240,17 +213,17 @@ local function EnterBanners()
         if firstNextActivation then
             if tonumber(key) == arrayPosition[(positionIndex % #arrayPosition) + 1] then
                     local banner = value:GetChild("Banner")   
-
+                    -- Bloco necessário se não a o efeito de retorno não funciona.      
                     musicWheel:stoptweening()
                     musicWheel:zoom(0)
-                    musicWheel:y(SCREEN_HEIGHT-118+180)
+                    musicWheel:y(345)
                     musicWheel:decelerate(.2)
-                    musicWheel:y(SCREEN_HEIGHT-118-10)
+                    musicWheel:y(345)
                     musicWheel:decelerate(.1)
-                    musicWheel:y(SCREEN_HEIGHT-118)
+                    musicWheel:y(345)
 
                     musicWheel:zoom(1.1)
-                    
+                    -- Retorna o Banner pra posição, y(25) garante que o banner não desloque para baixo.
                     banner:y(0)
                     banner:zoomto(0,0)
                     banner:decelerate(.2)
@@ -263,17 +236,17 @@ local function EnterBanners()
         elseif firstPreviousActivation then
             if tonumber(key) == arrayPosition[positionIndex] then
                 local banner = value:GetChild("Banner")   
-
+                -- Bloco necessário se não a o efeito de retorno não funciona.
                 musicWheel:stoptweening()
                 musicWheel:zoom(0)
-                musicWheel:y(SCREEN_HEIGHT-118+180)
+                musicWheel:y(345)
                 musicWheel:decelerate(.2)
-                musicWheel:y(SCREEN_HEIGHT-118-10)
+                musicWheel:y(345)
                 musicWheel:decelerate(.1)
-                musicWheel:y(SCREEN_HEIGHT-118)
+                musicWheel:y(345)
 
                 musicWheel:zoom(1.1)
-                
+                -- Retorna o Banner pra posição, y(25) garante que o banner não desloque para baixo.
                 banner:zoomto(0,0)
                 banner:decelerate(.2)
                 banner:zoomto(57.5, 41)
@@ -293,7 +266,7 @@ local function NextSong()
     else
         positionIndex = (positionIndex + 1 - 1) % #arrayPosition + 1 -- Avança uma posição subsequente
     end
-    firstPreviousActivation = true -- Reset Previous Activation to handle alternating correctly
+    firstPreviousActivation = true -- Reset Previous Activation para garantir que as alterações de musica não alterem posições
 
 
 end
@@ -306,57 +279,12 @@ local function PreviousSong()
     else
         positionIndex = (positionIndex - 1 - 1) % #arrayPosition + 1 -- Retrocede uma posição subsequente
     end
-    firstNextActivation = true -- Reset Next Activation to handle alternating correctly
-
-
-
+    firstNextActivation = true -- Reset Next Activation para garantir que as alterações de musica não alterem posições
 end
-
--- t[#t+1] =  Def.ActorFrame{
--- 	Def.Banner{
--- 		InitCommand=cmd(scaletoclipped,165,125);
--- 		SetMessageCommand=function(self,params)
--- 			local song = params.Song;
--- 			self:LoadFromSongBanner( song );
--- 			-- 
--- 		end;
-		
--- 	OnCommand=cmd(zoomx,10;sleep,0.1;decelerate,0.2;zoomx,1;);
--- 	SongChosenMessageCommand=cmd(stoptweening;zoom,1;sleep,0.05;decelerate,0.25;zoom,0;sleep,3;diffusealpha,0);
--- 	SongUnchosenMessageCommand=cmd(stoptweening;zoom,0;sleep,0.1;accelerate,0.2;zoom,1;diffusealpha,1);
--- 	ChannelScrollerActiveMessageCommand=cmd(;stoptweening;zoomx,1;sleep,0.05;zoomx,1;accelerate,0.1;zoomx,10;decelerate,0.1;zoom,0;visible,false);
--- 	ChannelScrollerInactiveMessageCommand=cmd(;stoptweening;zoom,0;sleep,0.05;zoom,1;zoomx,0.5;sleep,0.1;linear,0.2;zoomx,1;visible,true);
--- 	ChannelChosenMessageCommand=cmd(visible,true);
--- 	SelectChannelMessageCommand=cmd(visible,false);
--- 	};
--- 	LoadActor("BOX") .. {
--- 		InitCommand=cmd(animate,false;setsize,175,140);
--- 			OnCommand=cmd(zoomx,10;sleep,0.1;decelerate,0.2;zoomx,1;);
--- 	SongChosenMessageCommand=cmd(stoptweening;zoom,1;sleep,0.05;decelerate,0.25;zoom,0;);
--- 	SongUnchosenMessageCommand=cmd(stoptweening;zoom,0;sleep,0.1;accelerate,0.2;zoom,1;);
--- 	ChannelScrollerActiveMessageCommand=cmd(stoptweening;zoomx,1;sleep,0.05;zoomx,1;accelerate,0.1;zoomx,10;decelerate,0.1;zoom,0;);
--- 	ChannelScrollerInactiveMessageCommand=cmd(stoptweening;zoom,0;sleep,0.05;zoom,1;zoomx,0.5;sleep,0.1;linear,0.2;zoomx,1;);
--- 	ChannelChosenMessageCommand=cmd(visible,true);
--- 	SelectChannelMessageCommand=cmd(visible,false);
--- 	};
--- };
-
 
 
 -- Adiciona o debug na tela
 t[#t+1] = Def.ActorFrame {
-    LoadFont("_century gothic 20px")..{
-        Name="DebugText";
-        -- Text="Debug: Iniciando...";
-        InitCommand=function(self)
-            self:xy(SCREEN_CENTER_X - 350, SCREEN_TOP + 120)
-            self:zoom(0.5)
-            -- self:settext("Carregando...")
-            self:halign(0)
-            self:draworder(100)
-            -- AddDebugMessage("Debug do OnCommand")
-            --     UpdateDebugText(self)
-        end;
         RepeatRotateCommand=function(self)
             self:linear(1)
             self:rotationy(0)
@@ -365,27 +293,16 @@ t[#t+1] = Def.ActorFrame {
         end;
         OnCommand=function(self)
             RotationBanner(positionIndex, 0) -- Chamar RotationBanner na inicialização para garantir que o arrayPosition funcione
-            -- RefreshBanners()
-            -- UpdateDebugText(self)
         end;
         CurrentSongChangedMessageCommand=function(self)
-            -- UpdateDebugText(self)
         end;
         NextSongMessageCommand=function(self)
-            -- UpdateDebugText(self)
             NextSong() -- Avança para a próxima posição
             RotationBanner(positionIndex, 360, false)
-            -- AddDebugMessage("Valor de PositionIndex: " .. tostring(positionIndex))
-            -- UpdateDebugText(self)
-            -- RefreshBanners()
         end;
         PreviousSongMessageCommand=function(self)
-            -- UpdateDebugText(self)
             PreviousSong() -- Retrocede para a posição anterior
             RotationBanner(positionIndex, -360, true)
-            -- AddDebugMessage("Valor de PositionIndex: " .. tostring(positionIndex))
-            -- UpdateDebugText(self)
-            -- RefreshBanners()
         end;
         StartSelectingStepsMessageCommand=function(self)
             ExitBanners() 
@@ -401,7 +318,7 @@ t[#t+1] = Def.ActorFrame {
         GoBackSelectingGroupMessageCommand=function(self)
             ExitBanners()
         end;
-    };
+
 };
 
 

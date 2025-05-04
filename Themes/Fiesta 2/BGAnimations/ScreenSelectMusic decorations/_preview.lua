@@ -1,45 +1,45 @@
 local t = Def.ActorFrame {}
 
--- Frame
-t[#t+1] = LoadActor( THEME:GetPathG("","ScreenSelectMusic/preview_frame") )..{
-	InitCommand=cmd(blend,'BlendMode_Add';basezoom,.66);
-	OnCommand=cmd(stoptweening;visible,false);
-	NextSongMessageCommand=cmd(stoptweening;visible,true;diffusealpha,0;zoomx,0;x,-180;linear,.1;diffusealpha,1;x,0;zoomx,1;linear,.1;diffusealpha,0;x,180);
-	PreviousSongMessageCommand=cmd(stoptweening;visible,true;diffusealpha,0;zoomx,0;x,180;linear,.1;diffusealpha,1;x,0;zoomx,1;linear,.1;diffusealpha,0;x,-180);
-	GoBackSelectingGroupMessageCommand=cmd(stoptweening;visible,false);
-	StartSelectingSongMessageCommand=cmd(stoptweening;visible,false);
-	StartSelectingStepsMessageCommand=cmd(stoptweening;visible,false);
-	OffCommand=cmd(stoptweening;visible,false);
-}
+-- -- Frame
+-- t[#t+1] = LoadActor( THEME:GetPathG("","ScreenSelectMusic/preview_frame") )..{
+-- 	InitCommand=cmd(blend,'BlendMode_Add';basezoom,.66);
+-- 	OnCommand=cmd(stoptweening;visible,false);
+-- 	NextSongMessageCommand=cmd(stoptweening;visible,true;diffusealpha,0;zoomx,0;x,-180;linear,.1;diffusealpha,1;x,0;zoomx,1;linear,.1;diffusealpha,0;x,180);
+-- 	PreviousSongMessageCommand=cmd(stoptweening;visible,true;diffusealpha,0;zoomx,0;x,180;linear,.1;diffusealpha,1;x,0;zoomx,1;linear,.1;diffusealpha,0;x,-180);
+-- 	GoBackSelectingGroupMessageCommand=cmd(stoptweening;visible,false);
+-- 	StartSelectingSongMessageCommand=cmd(stoptweening;visible,false);
+-- 	StartSelectingStepsMessageCommand=cmd(stoptweening;visible,false);
+-- 	OffCommand=cmd(stoptweening;visible,false);
+-- }
 
--- Frame
-t[#t+1] = LoadActor( THEME:GetPathG("","ScreenSelectMusic/songprev_frame") )..{
-	InitCommand=cmd(blend,'BlendMode_Add';zoom,.66;draworder,-1);
-	OnCommand=cmd(stoptweening;sleep,.74;queuecommand,'Loop');
-	LoopCommand=cmd(stoptweening;diffusealpha,0;zoomx,.6;linear,.8;zoomx,.5;diffusealpha,.5;linear,.8;zoomx,.6;diffusealpha,0;queuecommand,'Loop');
-	CurrentSongChangedMessageCommand=cmd(stoptweening;diffusealpha,0;sleep,.74;queuecommand,'Loop');
-	GoBackSelectingGroupMessageCommand=cmd(stoptweening;diffusealpha,0);
-	StartSelectingSongMessageCommand=cmd(stoptweening;sleep,.74;queuecommand,'Loop');
-	GoBackSelectingSongMessageCommand=cmd(stoptweening;playcommand,'Loop');
-	StepsChosenMessageCommand=cmd(stoptweening;diffusealpha,0);
-	StartSelectingStepsMessageCommand=cmd(stoptweening;diffusealpha,0);
-	StepsPreselectedCancelledMessageCommand=cmd(stoptweening;playcommand,'Loop');
-	OffCommand=cmd(stoptweening;visible,false);
-}
+-- -- Frame
+-- t[#t+1] = LoadActor( THEME:GetPathG("","ScreenSelectMusic/songprev_frame") )..{
+-- 	InitCommand=cmd(blend,'BlendMode_Add';zoom,.66;draworder,-1);
+-- 	OnCommand=cmd(stoptweening;sleep,.74;queuecommand,'Loop');
+-- 	LoopCommand=cmd(stoptweening;diffusealpha,0;zoomx,.6;linear,.8;zoomx,.5;diffusealpha,.5;linear,.8;zoomx,.6;diffusealpha,0;queuecommand,'Loop');
+-- 	CurrentSongChangedMessageCommand=cmd(stoptweening;diffusealpha,0;sleep,.74;queuecommand,'Loop');
+-- 	GoBackSelectingGroupMessageCommand=cmd(stoptweening;diffusealpha,0);
+-- 	StartSelectingSongMessageCommand=cmd(stoptweening;sleep,.74;queuecommand,'Loop');
+-- 	GoBackSelectingSongMessageCommand=cmd(stoptweening;playcommand,'Loop');
+-- 	StepsChosenMessageCommand=cmd(stoptweening;diffusealpha,0);
+-- 	StartSelectingStepsMessageCommand=cmd(stoptweening;diffusealpha,0);
+-- 	StepsPreselectedCancelledMessageCommand=cmd(stoptweening;playcommand,'Loop');
+-- 	OffCommand=cmd(stoptweening;visible,false);
+-- }
 
--- Frame
-t[#t+1] = LoadActor( THEME:GetPathG("","ScreenSelectMusic/preview_frame") )..{
-	InitCommand=cmd(blend,'BlendMode_Add';zoom,.66;draworder,1);
-	OnCommand=cmd(stoptweening;diffusealpha,0);
-	LoopCommand=cmd(stoptweening;diffusealpha,0;zoomx,.6;linear,.8;zoomx,.5;diffusealpha,.5;linear,.8;zoomx,.6;diffusealpha,0;queuecommand,'Loop');
-	CurrentSongChangedMessageCommand=cmd(stoptweening;diffusealpha,0);
-	GoBackSelectingGroupMessageCommand=cmd(stoptweening;diffusealpha,0);
-	StartSelectingStepsMessageCommand=cmd(stoptweening;queuecommand,'Loop');
-	GoBackSelectingSongMessageCommand=cmd(stoptweening;diffusealpha,0);
-	StepsChosenMessageCommand=cmd(stoptweening;diffusealpha,0);
-	StepsPreselectedCancelledMessageCommand=cmd(stoptweening;playcommand,'Loop');
-	OffCommand=cmd(stoptweening;visible,false);
-}
+-- -- Frame
+-- t[#t+1] = LoadActor( THEME:GetPathG("","ScreenSelectMusic/preview_frame") )..{
+-- 	InitCommand=cmd(blend,'BlendMode_Add';zoom,.66;draworder,1);
+-- 	OnCommand=cmd(stoptweening;diffusealpha,0);
+-- 	LoopCommand=cmd(stoptweening;diffusealpha,0;zoomx,.6;linear,.8;zoomx,.5;diffusealpha,.5;linear,.8;zoomx,.6;diffusealpha,0;queuecommand,'Loop');
+-- 	CurrentSongChangedMessageCommand=cmd(stoptweening;diffusealpha,0);
+-- 	GoBackSelectingGroupMessageCommand=cmd(stoptweening;diffusealpha,0);
+-- 	StartSelectingStepsMessageCommand=cmd(stoptweening;queuecommand,'Loop');
+-- 	GoBackSelectingSongMessageCommand=cmd(stoptweening;diffusealpha,0);
+-- 	StepsChosenMessageCommand=cmd(stoptweening;diffusealpha,0);
+-- 	StepsPreselectedCancelledMessageCommand=cmd(stoptweening;playcommand,'Loop');
+-- 	OffCommand=cmd(stoptweening;visible,false);
+-- }
 
 -------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------
@@ -258,30 +258,6 @@ t[#t+1] = Def.ActorFrame {
 
 t[#t+1] = LoadActor( THEME:GetPathG("","ScreenSelectMusic/_song_info_bg") )..{
 	InitCommand=cmd(y,73;zoom,0.67);
-}
-
-t[#t+1] = LoadActor( THEME:GetPathG("","ScreenSelectMusic/_side_to_left") )..{
-	InitCommand=cmd(blend,'BlendMode_Add';basezoom,0.67;horizalign,right;x,-148);
-	StartSelectingStepsMessageCommand=cmd(stoptweening;sleep,.15;x,-155;diffusealpha,0;zoom,0;linear,.0;zoom,1;x,-148;diffusealpha,1;queuecommand,'Loop');
-	GoBackSelectingSongMessageCommand=cmd(stoptweening;x,-148;diffusealpha,1;zoom,1;linear,.0;zoom,0;x,-155;diffusealpha,0);
-	OffCommand=cmd(stoptweening;x,-148;diffusealpha,1;zoom,1;linear,.2;zoom,0;x,-155;diffusealpha,0);
-	OnCommand=cmd(diffusealpha,0;zoom,0);
-	LoopCommand=cmd(stoptweening;diffusealpha,1;linear,.5;diffusealpha,.5;linear,.5;diffusealpha,1;queuecommand,'Loop');
-	FastLoopCommand=cmd(stoptweening;diffusealpha,1;linear,.1;diffusealpha,.5;linear,.1;diffusealpha,1;queuecommand,'FastLoop');
-	StepsChosenMessageCommand=cmd(stoptweening;queuecommand,'FastLoop');
-	StepsPreselectedCancelledMessageCommand=cmd(stoptweening;playcommand,'Loop');
-}
-
-t[#t+1] = LoadActor( THEME:GetPathG("","ScreenSelectMusic/_side_to_left") )..{
-	InitCommand=cmd(blend,'BlendMode_Add';basezoom,0.67;horizalign,right;x,148;rotationy,180);
-	StartSelectingStepsMessageCommand=cmd(stoptweening;sleep,.15;x,155;diffusealpha,0;zoom,0;linear,.0;zoom,1;x,148;diffusealpha,1;queuecommand,'Loop');
-	GoBackSelectingSongMessageCommand=cmd(stoptweening;x,148;diffusealpha,1;zoom,1;linear,.0;zoom,0;x,155;diffusealpha,0);
-	OffCommand=cmd(stoptweening;x,148;diffusealpha,1;zoom,1;linear,.2;zoom,0;x,155;diffusealpha,0);
-	OnCommand=cmd(diffusealpha,0;zoom,0);
-	LoopCommand=cmd(stoptweening;diffusealpha,1;linear,.5;diffusealpha,.5;linear,.5;diffusealpha,1;queuecommand,'Loop');
-	FastLoopCommand=cmd(stoptweening;diffusealpha,1;linear,.1;diffusealpha,.5;linear,.1;diffusealpha,1;queuecommand,'FastLoop');
-	StepsChosenMessageCommand=cmd(stoptweening;queuecommand,'FastLoop');
-	StepsPreselectedCancelledMessageCommand=cmd(stoptweening;playcommand,'Loop');
 }
 
 t[#t+1] = LoadActor( THEME:GetPathG("","ScreenSelectMusic/_arrow_to_left") )..{

@@ -767,11 +767,6 @@ t[#t+1] = LoadActor(THEME:GetPathG("","Common Resources/TIMER_FRAME.mpg") )..{
 	OnCommand=cmd(zoom,0.05;x,cx;y,22;play;MaskDest;);
 };
 
---loading twice to speed up the animation (exploiting an ffmpeg bug)
-t[#t+1] = LoadActor(THEME:GetPathG("","Common Resources/TIMER_FRAME.mpg") )..{
-	OnCommand=cmd(zoom,0.05;x,cx;y,22;play;MaskDest;);
-};
-
 t[#t+1] = Def.ActorProxy {
 	BeginCommand=function(self) 
 		local Timer = SCREENMAN:GetTopScreen():GetChild('Timer'); 
