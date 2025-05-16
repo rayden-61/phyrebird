@@ -2,29 +2,30 @@ local t = Def.ActorFrame {
 	OnCommand=cmd(playcommand,'StartSelectingSong');
 }
 
----------------------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------------------
--- Channel text
-t[#t+1] = LoadActor( THEME:GetPathG("","ScreenSelectMusic/selection_states 1x3") )..{
-	InitCommand=cmd(y,42;zoom,.66;pause;setstate,1);
-	GoBackSelectingGroupMessageCommand=cmd(finishtweening;setstate,0;playcommand,'Change');
-	StartSelectingSongMessageCommand=cmd(finishtweening;setstate,1;playcommand,'Change');
-	GoBackSelectingSongMessageCommand=cmd(finishtweening;setstate,1;playcommand,'Change');
-	StartSelectingStepsMessageCommand=cmd(finishtweening;setstate,2;playcommand,'Change');
-	GoBackSelectingStepsMessageCommand=cmd(finishtweening;setstate,2;playcommand,'Change');
-	ChangeCommand=cmd(diffusealpha,1;linear,.2;diffusealpha,0;sleep,0;diffusealpha,1);
-	OffCommand=cmd(stoptweening;diffusealpha,0);
-};
+t[#t+1] = LoadActor(THEME:GetPathG("","Common Resources/TIMER_MASK.png") )..{
+	OnCommand=function(self)
+		self:zoom(0.075)
+		self:x(cx)
+		self:y(22)
+		self:play()
+		self:MaskSource()
+	end
+}
 
-t[#t+1] = LoadActor( THEME:GetPathG("","ScreenSelectMusic/selection_states 1x3") )..{
-	InitCommand=cmd(y,42;zoom,.66;pause;setstate,1;blend,'BlendMode_Add');
-	GoBackSelectingGroupMessageCommand=cmd(finishtweening;setstate,0;playcommand,'Change');
-	StartSelectingSongMessageCommand=cmd(finishtweening;setstate,1;playcommand,'Change');
-	GoBackSelectingSongMessageCommand=cmd(finishtweening;setstate,1;playcommand,'Change');
-	StartSelectingStepsMessageCommand=cmd(finishtweening;setstate,2;playcommand,'Change');
-	GoBackSelectingStepsMessageCommand=cmd(finishtweening;setstate,2;playcommand,'Change');
-	ChangeCommand=cmd(diffusealpha,0;sleep,.2;zoom,.66;diffusealpha,.8;linear,.2;diffusealpha,0;zoomx,.72);
-	OffCommand=cmd(stoptweening;diffusealpha,0);
-};
+
+
+t[#t+1] = Def.Sprite {
+    Texture = THEME:GetPathG("", "Common Resources/TIMER_FRAME 5x8.jpg"),
+    OnCommand = function(self)
+        self:SetAllStateDelays(0.02) -- Tempo por frame (menor = mais rápido)
+        self:setstate(0) -- começa do primeiro frame
+        self:animate(true) -- ativa a animação automática
+
+        self:zoom(0.325)
+        self:x(cx)
+        self:y(22)
+        self:MaskDest()
+    end
+}
 
 return t;

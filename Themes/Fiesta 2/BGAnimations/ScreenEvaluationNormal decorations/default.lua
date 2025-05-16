@@ -756,25 +756,10 @@ t[#t+1] = LoadActor( "_recordplates.lua" )..{
 	OffCommand=cmd(stoptweening;visible,false);
 };
 
-
-
 -- Timer
-t[#t+1] = LoadActor(THEME:GetPathG("","Common Resources/TIMER_MASK.png") )..{
-	OnCommand=cmd(zoom,0.05;x,cx;y,22;play;MaskSource;);
-};
 
-t[#t+1] = LoadActor(THEME:GetPathG("","Common Resources/TIMER_FRAME.mpg") )..{
-	OnCommand=cmd(zoom,0.05;x,cx;y,22;play;MaskDest;);
-};
 
-t[#t+1] = Def.ActorProxy {
-	BeginCommand=function(self) 
-		local Timer = SCREENMAN:GetTopScreen():GetChild('Timer'); 
-		self:SetTarget(Timer); 
-		end;
-	OnCommand=cmd(x,SCREEN_CENTER_X;y,20;basezoom,.66;zoom,0;sleep,.2;linear,.05;zoom,1);
-	OffCommand=cmd(finishtweening;zoom,1;linear,.2;zoom,0);
-}
+t[#t+1] = LoadActor("_timer")..{}
 
 -- QR Code shenanigans
 local QRView = { PLAYER_1 = false, PLAYER_2 = false }
