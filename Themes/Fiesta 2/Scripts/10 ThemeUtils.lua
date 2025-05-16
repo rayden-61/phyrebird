@@ -1037,7 +1037,7 @@ function GetBallLevelColor( pn, show_dir_arrows )
 			-- Esfera del nivel --
 			LoadActor( THEME:GetPathG("","ScreenSelectMusic/Difficulty_Bigballs 4x2") )..{
 				Name="Bigballs";
-				InitCommand=cmd(pause;basezoom,3);
+				InitCommand=cmd(pause;basezoom,0.75);
 			};	
 			
 			-- -- Big glow

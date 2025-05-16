@@ -171,33 +171,25 @@ t[#t+1] = LoadActor("_arrows")..{
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
---JOIN MESSAGES
---[[
-if not GAMESTATE:IsSideJoined(PLAYER_1) then
-t[#t+1] = LoadActor( THEME:GetPathG("","Messages/"..GetLanguageText().."_join.png") )..{
-	InitCommand=cmd(draworder,20;x,SCREEN_LEFT+100;y,SCREEN_BOTTOM-120;diffusealpha,0;decelerate,.2;x,SCREEN_LEFT+160;diffusealpha,1;sleep,6;decelerate,.2;x,SCREEN_LEFT-50;diffusealpha,0);
-	TimerOutSelectingSongCommand=cmd(playcommand,'Off');
-}
-end;
+-- --JOIN MESSAGES
 
-if not GAMESTATE:IsSideJoined(PLAYER_2) then
-t[#t+1] = LoadActor( THEME:GetPathG("","Messages/"..GetLanguageText().."_join.png") )..{
-	InitCommand=cmd(draworder,20;x,SCREEN_RIGHT-100;y,SCREEN_BOTTOM-120;diffusealpha,0;decelerate,.2;x,SCREEN_RIGHT-160;diffusealpha,1;sleep,6;decelerate,.2;x,SCREEN_RIGHT+50;diffusealpha,0);
-	TimerOutSelectingSongCommand=cmd(playcommand,'Off');
-}
-end;
-]]
+-- if not GAMESTATE:IsSideJoined(PLAYER_1) then
+-- t[#t+1] = LoadActor( THEME:GetPathG("","Messages/"..GetLanguageText().."_join.png") )..{
+-- 	InitCommand=cmd(draworder,20;x,SCREEN_LEFT+100;y,SCREEN_BOTTOM-120;diffusealpha,0;decelerate,.2;x,SCREEN_LEFT+160;diffusealpha,1;sleep,6;decelerate,.2;x,SCREEN_LEFT-50;diffusealpha,0);
+-- 	TimerOutSelectingSongCommand=cmd(playcommand,'Off');
+-- }
+-- end;
+
+-- if not GAMESTATE:IsSideJoined(PLAYER_2) then
+-- t[#t+1] = LoadActor( THEME:GetPathG("","Messages/"..GetLanguageText().."_join.png") )..{
+-- 	InitCommand=cmd(draworder,20;x,SCREEN_RIGHT-100;y,SCREEN_BOTTOM-120;diffusealpha,0;decelerate,.2;x,SCREEN_RIGHT-160;diffusealpha,1;sleep,6;decelerate,.2;x,SCREEN_RIGHT+50;diffusealpha,0);
+-- 	TimerOutSelectingSongCommand=cmd(playcommand,'Off');
+-- }
+-- end;
+
 --------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------
 --TIMER
--- DrawOrder = 1
---[[t[#t+1] = LoadActor("_timer")..{
-	OnCommand=cmd(x,cx;y,-10;decelerate,.1;y,10;decelerate,.1;y,2);
-	OffCommand=cmd(x,cx;y,0;decelerate,.1;y,10;decelerate,.1;y,-58);
-	TimerOutSelectingSongCommand=cmd(playcommand,'Off');
-	TimerOutSelectingGroupCommand=cmd(playcommand,'Off');
-};--]]
-
 t[#t+1] = LoadActor("_timer")..{}
 
 
