@@ -120,6 +120,10 @@ local function PlayerName( Player )
 			InitCommand=cmd(horizalign,center;y,15;x,-80;zoom,.85);
 		};
 		t[#t+1] = LoadFont("","_myriad pro 20px") .. {
+			Name = "GameMode";
+			InitCommand=cmd(horizalign,center;y,0;x,-80;zoom,.85);
+		};
+		t[#t+1] = LoadFont("","_myriad pro 20px") .. {
 			Name = "SessionDataText";
 			InitCommand=cmd(y,67;x,16;zoom,.60);
 		};
@@ -155,6 +159,8 @@ function GetDigit( number, digit )
 	return 1;
 end;
 
+local gameMode = GAMESTATE:Env()["SelectedGameMode"]
+
 local SessionDataTable = {};
 local P1CurrentProfile="";
 local P1CurrentSongTimeS=0;
@@ -179,6 +185,10 @@ t[#t+1] = PlayerName( PLAYER_1 )..{
 			local textLV = self:GetChild("TextLv");
 			textLV:settext("Lv.");
 			textLV:x(-30);
+			-- local player_game_mode = self:GetChild("GameMode")
+			-- player_game_mode:settext("")
+			-- player_game_mode:horizalign(left);
+			-- player_game_mode:x(-20)
 			local player_level_text = self:GetChild("PlayerLevelText")
 			player_level_text:settext("0001".." (0%)");
 			player_level_text:horizalign(left);
@@ -323,14 +333,17 @@ t[#t+1] = PlayerName( PLAYER_1 )..{
 				end
 			end;
 			local avatar = self:GetChild("Avatar");
+			local profile = PROFILEMAN:GetLocalProfile(ProfileID);
+			local CharID = profile:GetAvatarID();
+			
 			if FILEMAN:GetFileSizeBytes(PROFILEMAN:LocalProfileIDToDir(ProfileID).."/avatar.png") > 316 then
 				avatar:Load(PROFILEMAN:LocalProfileIDToDir(ProfileID).."/avatar.png");
 			else
-				avatar:Load(THEME:GetPathG("","_avatars/"..ProfileID..".png"));
+				avatar:Load(THEME:GetPathG("","_avatars/00000" ..string.format("%.3d", (CharID) )..".png")); 
 			end;
 			avatar:horizalign(left);
-			avatar:SetWidth(55);
-			avatar:SetHeight(55);
+			avatar:SetWidth(50);
+			avatar:SetHeight(50);
 			
 			local profile = PROFILEMAN:GetLocalProfile(ProfileID);
 			local player_level, to_next =  CalcPlayerLevel(profile:GetVoomax());
@@ -423,6 +436,8 @@ t[#t+1] = PlayerName( PLAYER_2 ) .. {
 			textLV:x(-50);
 			textLV:rotationy(180)
 			P2CurrentProfile = "GUEST P2";
+			local player_game_mode = self:GetChild("GameMode")
+			player_game_mode:zoomx(-1)
 			local player_level_text = self:GetChild("PlayerLevelText")
 			player_level_text:settext("0001".." (0%)");
 			player_level_text:horizalign(left);
@@ -576,11 +591,15 @@ t[#t+1] = PlayerName( PLAYER_2 ) .. {
 				end
 			end;
 			local avatarp2 = self:GetChild("Avatar");
+			local profile = PROFILEMAN:GetLocalProfile(ProfileID);
+			local CharID = profile:GetAvatarID();
+			
 			if FILEMAN:GetFileSizeBytes(PROFILEMAN:LocalProfileIDToDir(ProfileID).."/avatar.png") > 316 then
 				avatarp2:Load(PROFILEMAN:LocalProfileIDToDir(ProfileID).."/avatar.png");
 			else
-				avatarp2:Load(THEME:GetPathG("","_avatars/"..ProfileID..".png"));
+				avatarp2:Load(THEME:GetPathG("","_avatars/00000" ..string.format("%.3d", (CharID) )..".png")); 
 			end;
+
 			avatarp2:horizalign(right);
 			avatarp2:SetWidth(50);
 			avatarp2:SetHeight(50);

@@ -4,7 +4,6 @@ local t = Def.ActorFrame {
 
 collectgarbage();
 
-
 t[#t+1] = LoadActor("_musicwheel")..{}
 
 -------------------------------------GENERAL------------------------------------------------------
@@ -67,9 +66,6 @@ if GAMESTATE:IsSideJoined( PLAYER_2 ) then
 	t[#t+1] = GetHighScoresFrame( PLAYER_2, false )..{
 		InitCommand=cmd(x,cx+270;y,SCREEN_BOTTOM-105);
 	}
---	t[#t+1] = GetPHighScoresFrame( PLAYER_2, false )..{
---		InitCommand=cmd(x,cx+320;y,SCREEN_BOTTOM-85);
---	}
 	t[#t+1] = LoadFont("SongTitle")..{
 		UpdateVisibilityCommand=function(self)
 			local stepartist = GAMESTATE:GetCurrentSteps(PLAYER_2):GetAuthorCredit();
@@ -164,14 +160,6 @@ t[#t+1] = SimplePlatPiu(cx,cy+80)..{
 	GoBackSelectingSongMessageCommand=cmd(stoptweening;visible,false);
 	OffCommand=cmd(stoptweening;visible,false);
 }
-
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
---CHANNEL, CATEGORY
--- t[#t+1] = LoadActor("_stages")..{
--- 	TimerOutSelectingSongCommand=cmd(playcommand,'Off');
--- 	TimerOutSelectingGroupCommand=cmd(playcommand,'Off');
--- }
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
