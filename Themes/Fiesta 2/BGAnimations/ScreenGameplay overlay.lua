@@ -140,6 +140,7 @@ if cur_song_auto ~= "AutoSyncMachine" then
 				end;
 
 				PostLifeChangeCommand=function(self)
+					self:stoptweening();
 					if StageBreak ~= true then
 						local timeline = self:GetChild("Timeline");
 						local shattersound = self:GetChild("ShatterSound");
@@ -243,6 +244,7 @@ if cur_song_auto ~= "AutoSyncMachine" then
 			end;
 
 			PostLifeChangeCommand=function(self)
+				self:stoptweening();
 				if StageBreak ~= true then
 					local timeline = self:GetChild("Timeline");
 					local shattersound = self:GetChild("ShatterSound");

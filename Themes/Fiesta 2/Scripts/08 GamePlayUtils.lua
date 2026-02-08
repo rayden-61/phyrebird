@@ -19,19 +19,19 @@ return Def.ActorFrame {
 	LoadActor(THEME:GetPathG("","judgelabels 1x5"))..{
 		Name="judgm";
 		OnCommand=cmd(stoptweening;pause;basezoom,.67;zoom,1.0;diffusealpha,0);
-		NormalCommand=cmd(diffusealpha,1;glow,1,1,1,0;zoom,0.97;y,-57;linear,.08;y,-49;zoom,.8;linear,.42;diffusealpha,.8;sleep,0;glow,1,1,1,.4;linear,.34;y,-44;diffusealpha,0;zoomx,1.7;zoomy,0;glow,1,1,1,0);
+		NormalCommand=cmd(diffusealpha,1;glow,1,1,1,0;zoom,0.97;y,-57;linear,.08;y,-49;zoom,.8;linear,.42;diffusealpha,.8;sleep,0;glow,1,1,1,.4;linear,.34;y,-44;diffusealpha,0;zoomx,1.7;zoomy,0;glow,1,1,1,0;sleep,0);
 	};
 	--combo
 	LoadFont("combo")..{
 		Name="combo";
 		OnCommand=cmd(stoptweening;basezoom,.67;zoom,.6;y,9.8;diffusealpha,0;textglowmode,'TextGlowMode_Inner');
-		NormalCommand=cmd(diffusealpha,1;glow,1,1,1,0;y,-3;zoom,.59;y,.15;linear,.08;y,-17;zoom,.53;linear,.42;diffusealpha,.8;sleep,0;glow,1,1,1,.4;linear,.34;diffusealpha,0;glow,1,1,1,0);
+		NormalCommand=cmd(diffusealpha,1;glow,1,1,1,0;y,-3;zoom,.59;y,.15;linear,.08;y,-17;zoom,.53;linear,.42;diffusealpha,.8;sleep,0;glow,1,1,1,.4;linear,.34;diffusealpha,0;glow,1,1,1,0;sleep,0);
 	};
 	--label
 	LoadActor(THEME:GetPathG("","label"))..{
 		Name="label";
 		OnCommand=cmd(stoptweening;y,-10;basezoom,.67;zoom,1.2;diffusealpha,0);
-		NormalCommand=cmd(diffusealpha,1;glow,1,1,1,0;zoom,1.3;y,-21.5;linear,.08;zoom,.8;y,-22;linear,.42;diffusealpha,.8;sleep,0;glow,1,1,1,.4;linear,.34;y,-16;diffusealpha,0;zoomx,1.7;zoomy,0;glow,1,1,1,0);
+		NormalCommand=cmd(diffusealpha,1;glow,1,1,1,0;zoom,1.3;y,-21.5;linear,.08;zoom,.8;y,-22;linear,.42;diffusealpha,.8;sleep,0;glow,1,1,1,.4;linear,.34;y,-16;diffusealpha,0;zoomx,1.7;zoomy,0;glow,1,1,1,0;sleep,0);
 	};
 	
 	--"PERFECT"!

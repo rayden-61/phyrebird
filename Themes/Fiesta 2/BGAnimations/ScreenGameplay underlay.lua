@@ -140,7 +140,8 @@ if cur_song ~= "AutoSyncMachine" then
 				self:sleep(0.1);
 				self:queuecommand('PostLifeChange');
 			end;
-			PostLifeChangeMessageCommand=function(self)
+			PostLifeChangeCommand=function(self)
+				self:stoptweening();
 				local curstats = STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1);
 				local perfects = curstats:GetTapNoteScores('TapNoteScore_W2') + curstats:GetTapNoteScores('TapNoteScore_CheckpointHit');
 				local greats = curstats:GetTapNoteScores('TapNoteScore_W3');
@@ -178,7 +179,8 @@ if cur_song ~= "AutoSyncMachine" then
 					self:sleep(0.1);
 					self:queuecommand('PostLifeChange');
 				end;
-				PostLifeChangeMessageCommand=function(self)
+				PostLifeChangeCommand=function(self)
+					self:stoptweening();
 					if pscoreP1 >= 1000000 then self:x(SCREEN_LEFT+80) else self:x(SCREEN_LEFT+85) end;
 					if pscoreP1 > PersonalBest then
 						self:visible(true)
@@ -288,7 +290,8 @@ if cur_song ~= "AutoSyncMachine" then
 				self:sleep(0.1);
 				self:queuecommand('PostLifeChange');
 			end;
-			PostLifeChangeMessageCommand=function(self)
+			PostLifeChangeCommand=function(self)
+				self:stoptweening();
 				local curstats = STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2);
 				local perfects = curstats:GetTapNoteScores('TapNoteScore_W2') + curstats:GetTapNoteScores('TapNoteScore_CheckpointHit');
 				local greats = curstats:GetTapNoteScores('TapNoteScore_W3');
@@ -329,7 +332,8 @@ if cur_song ~= "AutoSyncMachine" then
 					self:sleep(0.1);
 					self:queuecommand('PostLifeChange');
 				end;
-				PostLifeChangeMessageCommand=function(self)
+				PostLifeChangeCommand=function(self)
+					self:stoptweening();
 					if pscoreP2 >= 1000000 then self:x(SCREEN_RIGHT-53) else self:x(SCREEN_RIGHT-48) end;
 					if pscoreP2 > PersonalBest then
 						self:visible(true)

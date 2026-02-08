@@ -1295,16 +1295,16 @@ function GetSimpleBallLevel( pn )
 			-- Glow Side to side --
 			LoadActor( THEME:GetPathG("","ScreenSelectMusic/Difficulty_Bigballs glow sidetoside.png") )..{
 				InitCommand=cmd(blend,'BlendMode_Add';diffuse,0,1,1,1);
-				ShowUpInternalCommand=cmd(stoptweening;diffusealpha,0;zoom,1;horizalign,center;x,0;sleep,.2;diffusealpha,1;linear,.2;diffusealpha,0);
+				ShowUpInternalCommand=cmd(stoptweening;diffusealpha,0;zoom,1;horizalign,center;x,0;sleep,.2;diffusealpha,1;linear,.2;diffusealpha,0;sleep,0);
 				HideInternalCommand=cmd(stoptweening;diffusealpha,0);
 				OffCommand=cmd(stoptweening;diffusealpha,0);
 				UpdateInternalCommand=function(self,params)
 					if params.Direction == -1 then	--der
-						(cmd(stoptweening;horizalign,left;diffusealpha,0;zoomx,0;x,-55;linear,.1;zoomx,1;diffusealpha,1))(self);
-						(cmd(horizalign,right;diffusealpha,1;zoomx,1;x,55;linear,.1;zoomx,0;diffusealpha,0))(self);
+						(cmd(stoptweening;horizalign,left;diffusealpha,0;zoomx,0;x,-55;linear,.1;zoomx,1;diffusealpha,1;sleep,0))(self);
+						(cmd(horizalign,right;diffusealpha,1;zoomx,1;x,55;linear,.1;zoomx,0;diffusealpha,0;sleep,0))(self);
 					elseif params.Direction == 1 then	--izq
-						(cmd(stoptweening;horizalign,right;diffusealpha,0;zoomx,0;x,55;linear,.1;zoomx,1;diffusealpha,1))(self);
-						(cmd(horizalign,left;diffusealpha,1;zoomx,1;x,-55;linear,.1;zoomx,0;diffusealpha,0))(self);
+						(cmd(stoptweening;horizalign,right;diffusealpha,0;zoomx,0;x,55;linear,.1;zoomx,1;diffusealpha,1;sleep,0))(self);
+						(cmd(horizalign,left;diffusealpha,1;zoomx,1;x,-55;linear,.1;zoomx,0;diffusealpha,0;sleep,0))(self);
 					end;
 				end;
 			};
@@ -1350,40 +1350,64 @@ end
 --
 
 function IsGroupOfficial()
-	local current_group = GAMESTATE:GetCurrentSong():GetGroupName();
-	if current_group == "16 - PHOENIX" then
-		return true;
-	elseif current_group == "01 - 1ST~3RD" then
-		return true;
-	elseif current_group == "02 - S.E.~EXTRA" then
-		return true; 
-	elseif current_group == "03 - REBIRTH~PREX 3" then
-		return true;
-	elseif current_group == "04 - EXCEED~ZERO" then
-		return true;
-	elseif current_group == "05 - NX~NX2" then
-		return true;
-	elseif current_group == "06 - NX ABSOLUTE" then
-		return true;
-	elseif current_group == "07 - PRO~PRO2" then
-		return true;
-	elseif current_group == "08 - FIESTA" then
-		return true;
-	elseif current_group == "09 - FIESTA EX" then
-		return true;
-	elseif current_group == "10 - FIESTA 2" then
-		return true;
-	elseif current_group == "11 - INFINITY" then
-		return true;
-	elseif current_group == "12 - PRIME" then
-		return true;
-	elseif current_group == "13 - PRIME 2" then
-		return true;
-	elseif current_group == "14 - XX" then
-		return true;
-	elseif current_group == "15 - MOBILE EDITION" then
-		return true;
-	else
-		return false;
-	end
-end;
+	local official_groups = {
+		["BASIC"] = true,
+		["BASICMODE"] = true,
+		["SKILLUPZONE"] = true,
+		["SKILLUP"] = true,
+		["STRD"] = true,
+		["ST"] = true,
+		["ND"] = true,
+		["RD"] = true,
+		["SE"] = true,
+		["EXTRA"] = true,
+		["PERFECTCOLLECTION"] = true,
+		["PERF"] = true,
+		["REBIRTH"] = true,
+		["REBIRTHPREX"] = true,
+		["PREMIERE"] = true,
+		["PREX"] = true,
+		["EXCEED"] = true,
+		["ZERO"] = true,
+		["SEEXTRA"] = true,
+		["REBIRTHPREX"] = true,
+		["EXCEEDZERO"] = true,
+		["NX"] = true,
+		["NXNX"] = true,
+		["NXNXA"] = true,
+		["NXABSOLUTE"] = true,
+		["NXA"] = true,
+		["PRO"] = true,
+		["PROPRO"] = true,
+		["JUMP"] = true,
+		["FIESTA"] = true,
+		["FIESTAEX"] = true,
+		["INFINITY"] = true,
+		["PRIME"] = true,
+		["XX"] = true,
+		["PIUXX"] = true,
+		["MOBILEEDITION"] = true,
+		["MOBILE"] = true,
+		["PHOENIX"] = true,
+		["PNX"] = true,
+		["PNXPNX"] = true,
+		["RISE"] = true,
+		["PIURISE"] = true,
+		["PUMPITUPRISE"] = true,
+		["M"] = true,
+		["PIUM"] = true,
+		["STPERF"] = true,
+		["EXTRAPREX"] = true,
+		["FIESTAFIESTA"] = true,
+		["STZERO"] = true,
+		["PRIMEPRIME"] = true,
+		["PHOENIXPHOENIX"] = true,
+		["STPERFECT"] = true,
+		["GENESIS"] = true,
+	}
+
+	local group = GAMESTATE:GetCurrentSong():GetGroupName()
+	group = string.upper(group);
+	group = string.gsub(group,"[^A-Z]", "")
+	return official_groups[group] == true
+end

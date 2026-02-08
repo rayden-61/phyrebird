@@ -69,12 +69,12 @@ local function and_or_xor(x, y, operation)
    y = (y0 - ry) / 256
    rx = x % 65536
    ry = y % 256
-   res = res + AND_of_two_bytes[rx + ry] * 256
+   res = res + AND_of_two_bytes[(rx + ry * 256) % 65536] * 256
    x = (x - rx) / 256
    y = (y - ry) / 256
    rx = x % 65536 + y % 256
-   res = res + AND_of_two_bytes[rx] * 65536
-   res = res + AND_of_two_bytes[(x + y - rx) / 256] * 16777216
+   res = res + AND_of_two_bytes[rx % 65536] * 65536
+   res = res + AND_of_two_bytes[floor((x + y - rx) / 256) % 65536] * 16777216
    if operation then
       res = x0 + y0 - operation * res
    end
