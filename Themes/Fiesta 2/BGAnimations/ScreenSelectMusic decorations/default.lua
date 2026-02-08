@@ -233,9 +233,9 @@ t[#t+1] = LoadActor("_diffbar_full")..{
 	InitCommand=cmd(draworder,16;x,SCREEN_CENTER_X;y,SCREEN_BOTTOM-58;zoom,.48); --> Quando inicia a cena
 	OnCommand=cmd(stoptweening;diffusealpha,0;x,cx-800;linear,.15;x,cx;diffusealpha,1); --> Animação inicial
 	StartSelectingSongMessageCommand=cmd(stoptweening;diffusealpha,0;x,cx-800;linear,.15;diffusealpha,1;x,cx); --> Ao voltar do GroupWheel
-	GoBackSelectingGroupMessageCommand=cmd(stoptweening;linear,.15;x,cx-800;diffusealpha,0); --> Ao entrar no GroupWheel
-	StartSelectingStepsMessageCommand=cmd(stoptweening;diffusealpha,1;y,SCREEN_BOTTOM-58;linear,.2;y,305;zoom,.53); --> Ao selecionar a música
-	GoBackSelectingSongMessageCommand=cmd(stoptweening;linear,.2;y,SCREEN_BOTTOM-58;zoom,.48); --> Ao cancelar a seleção da música
+	GoBackSelectingGroupMessageCommand=cmd(linear,.15;x,cx-800;diffusealpha,0); --> Ao entrar no GroupWheel
+	StartSelectingStepsMessageCommand=cmd(diffusealpha,1;y,SCREEN_BOTTOM-58;linear,.2;y,305;zoom,.53); --> Ao selecionar a música
+	GoBackSelectingSongMessageCommand=cmd(linear,.2;y,SCREEN_BOTTOM-58;zoom,.48); --> Ao cancelar a seleção da música
 	OffCommand=cmd(stoptweening;diffusealpha,1;linear,.5;x,cx-800;diffusealpha,0);
 	TimerOutSelectingSongCommand=cmd(stoptweening;diffusealpha,1;sleep,.05;linear,.25;y,305;diffusealpha,0);
 };

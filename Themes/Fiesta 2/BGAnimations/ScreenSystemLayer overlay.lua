@@ -120,6 +120,10 @@ local function PlayerName( Player )
 			InitCommand=cmd(horizalign,center;y,15;x,-80;zoom,.85);
 		};
 		t[#t+1] = LoadFont("","_myriad pro 20px") .. {
+			Name = "PlayerTitle";
+			InitCommand=cmd(horizalign,center;y,-12;x,10;zoom,.90);
+		};
+		t[#t+1] = LoadFont("","_myriad pro 20px") .. {
 			Name = "SessionDataText";
 			InitCommand=cmd(y,67;x,16;zoom,.60);
 		};
@@ -169,13 +173,15 @@ t[#t+1] = PlayerName( PLAYER_1 )..{
 		else
 			self:x(SCREEN_CENTER_X-170);
 		end;
-	(cmd(y,SCREEN_TOP-50;basezoom,.66))(self);
+	(cmd(y,SCREEN_TOP-100;basezoom,.66))(self);
 	end;
 	PlayerStartedSelectProfileMessageCommand=function( self, params )
 		local la = SCREENMAN:GetTopScreen():GetName();
 		if (params.Player == PLAYER_1) then
 			local name = self:GetChild("Name");
 			name:settext("GUEST P1");
+			local title = self:GetChild("PlayerTitle");
+			title:settext("BEGINNER");
 			local textLV = self:GetChild("TextLv");
 			textLV:settext("Lv.");
 			textLV:x(-30);
@@ -272,6 +278,8 @@ t[#t+1] = PlayerName( PLAYER_1 )..{
 		if params.pn=='PlayerNumber_P1' then
 			local name = self:GetChild("Name");
 			name:settext("GUEST P1");
+			local title = self:GetChild("PlayerTitle");
+			title:settext("BEGINNER");
 			P1CurrentProfile = "GUEST P1";
 			local avatar = self:GetChild("Avatar");
 			avatar:Load(THEME:GetPathG("","_avatars/PlayerNumber_P1.png"));
@@ -304,13 +312,15 @@ t[#t+1] = PlayerName( PLAYER_1 )..{
 				local progressbar = self:GetChild("ProgressBarFill");
 				progressbar:zoomto((0),4);
 			end;
-			self:y(SCREEN_TOP+20);
+			--self:y(SCREEN_TOP+20);
 		end;
 	end;
 	LocalProfileChangeMessageCommand=function(self,params)	--cambio la profile del jugador
 		if params.pn=='PlayerNumber_P1' then
 			local name = self:GetChild("Name");
 			name:settext( string.upper(string.sub(params.name,1,8)) ); --corta el nombre hasta 8 letras
+			local title = self:GetChild("PlayerTitle");
+			title:settext("BEGINNER");
 			P1CurrentProfile = params.name;
 			local DisplayNamesTable = PROFILEMAN:GetLocalProfileDisplayNames();
 			local ProfileID = "PlayerNumber_P1";
@@ -358,13 +368,15 @@ t[#t+1] = PlayerName( PLAYER_1 )..{
 			else
 				SessionDataText:settext("");
 			end;
-			self:y(SCREEN_TOP+20);
+			--self:y(SCREEN_TOP+20);
 		end;
 	end;
 	PlayerUnjoinedMessageCommand=function(self,params)
 		if params.Player ~= 'PlayerNumber_P1' then return; end;
 		local name = self:GetChild("Name");
 		name:settext("");
+		local title = self:GetChild("PlayerTitle");
+		title:settext("");
 		P1CurrentProfile = "";
 		local SessionDataText = self:GetChild("SessionDataText");
 		local player_level_text = self:GetChild("PlayerLevelText");
@@ -372,7 +384,7 @@ t[#t+1] = PlayerName( PLAYER_1 )..{
 		player_level_text:settext("0001".." (0%)");
 		local progressbar = self:GetChild("ProgressBarFill");
 		progressbar:zoomto((0),4);
-		self:y(SCREEN_TOP-50);
+		self:y(SCREEN_TOP-100);
 	end;
 	JudgmentMessageCommand=function(self,param)
 		if GAMESTATE:IsSideJoined(PLAYER_1) then
@@ -410,7 +422,7 @@ t[#t+1] = PlayerName( PLAYER_2 ) .. {
 		else
 			self:x(SCREEN_CENTER_X+170);
 		end;
-	(cmd(y,SCREEN_TOP-50; basezoom,.66;rotationy,180))(self);
+	(cmd(y,SCREEN_TOP-100; basezoom,.66;rotationy,180))(self);
 	end;
 	PlayerStartedSelectProfileMessageCommand=function( self, params )
 		if (params.Player == PLAYER_2) then
@@ -418,6 +430,10 @@ t[#t+1] = PlayerName( PLAYER_2 ) .. {
 			name:settext("GUEST P2");
 			name:rotationy(180)
 			name:x(0)
+			local title = self:GetChild("PlayerTitle");
+			title:settext("BEGINNER");
+			title:rotationy(180)
+			title:x(0)
 			local textLV = self:GetChild("TextLv");
 			textLV:settext("Lv.");
 			textLV:x(-50);
@@ -521,6 +537,8 @@ t[#t+1] = PlayerName( PLAYER_2 ) .. {
 		if params.pn=='PlayerNumber_P2' then
 			local name = self:GetChild("Name");
 			name:settext("GUEST P2");
+			local title = self:GetChild("PlayerTitle");
+			title:settext("BEGINNER");
 			P2CurrentProfile = "GUEST P2";
 			local player_level_text = self:GetChild("PlayerLevelText")
 			player_level_text:settext("0001".." (0%)");
@@ -553,7 +571,7 @@ t[#t+1] = PlayerName( PLAYER_2 ) .. {
 				local progressbar = self:GetChild("ProgressBarFill");
 				progressbar:zoomto((0),4);
 			end;
-			self:y(SCREEN_TOP+20);
+			--self:y(SCREEN_TOP+20);
 		end;
 	end;
 	LocalProfileChangeMessageCommand=function(self,params)	--cambio la profile del jugador
@@ -564,6 +582,8 @@ t[#t+1] = PlayerName( PLAYER_2 ) .. {
 			progressbar:zoomto((0),4);
 			local name = self:GetChild("Name");	
 			name:settext( string.upper(string.sub(params.name,1,8)) ); --corta el nombre hasta 8 letras
+			local title = self:GetChild("PlayerTitle");
+			title:settext("BEGINNER");
 			P2CurrentProfile = params.name;
 			local DisplayNamesTable = PROFILEMAN:GetLocalProfileDisplayNames();
 			local ProfileID = "PlayerNumber_P2";
@@ -611,13 +631,15 @@ t[#t+1] = PlayerName( PLAYER_2 ) .. {
 			else
 				SessionDataText:settext("");
 			end;
-			self:y(SCREEN_TOP+20);
+			--self:y(SCREEN_TOP+20);
 		end;
 	end;
 	PlayerUnjoinedMessageCommand=function(self,params)
 		if params.Player ~= 'PlayerNumber_P2' then return; end;
 		local name = self:GetChild("Name");
 		name:settext("");
+		local title = self:GetChild("PlayerTitle");
+		title:settext("");
 		P2CurrentProfile = "";
 		local SessionDataText = self:GetChild("SessionDataText");
 		local player_level_text = self:GetChild("PlayerLevelText");
@@ -625,7 +647,7 @@ t[#t+1] = PlayerName( PLAYER_2 ) .. {
 		player_level_text:settext("0001".." (0%)");
 		local progressbar = self:GetChild("ProgressBarFill");
 		progressbar:zoomto((0),4);
-		self:y(SCREEN_TOP-50);
+		self:y(SCREEN_TOP-100);
 	end;
 	JudgmentMessageCommand=function(self,param)
 		if GAMESTATE:IsSideJoined(PLAYER_2) then 

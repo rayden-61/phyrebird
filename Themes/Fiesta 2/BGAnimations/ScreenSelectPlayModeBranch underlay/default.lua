@@ -4,8 +4,8 @@ t[#t+1] = LoadActor(THEME:GetPathG("","ScreenSelectPlayModeBranch/BG.png"))..{
 	OnCommand=cmd(show_background_properly);
 }
 
-t[#t+1] = LoadActor(THEME:GetPathG("","ScreenSelectPlayModeBranch/girl.png"))..{
-	OnCommand=cmd(zoom,.33;y,SCREEN_CENTER_Y+60;x,SCREEN_WIDTH+200;linear,.3;x,SCREEN_CENTER_X+296;linear,.1;x,SCREEN_CENTER_X+206);
+t[#t+1] = LoadActor(THEME:GetPathG("","ScreenSelectPlayModeBranch/Azura.png"))..{
+	OnCommand=cmd(zoom,.30;y,SCREEN_CENTER_Y+80;x,SCREEN_WIDTH+200;linear,.3;x,SCREEN_CENTER_X+296;linear,.1;x,SCREEN_CENTER_X+206);
 }
 
 -- center

@@ -15,12 +15,12 @@ end
 local qrcode_size = 96
 
 local t = Def.ActorFrame {
-    LoadActor( THEME:GetPathG("","ScreenSelectMusic/highscores_bg") )..{
+    --[[LoadActor( THEME:GetPathG("","ScreenSelectMusic/highscores_bg") )..{
         InitCommand=function(self)
             self:xy(-2, 38)
             self:zoom(0.66)
         end
-    };
+    };--]]
     
     qrcode_amv( url, qrcode_size )..{
         InitCommand=function(self) 
