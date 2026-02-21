@@ -224,13 +224,33 @@ a[#a+1] = Def.Sprite {
 		end;
 		self:diffusealpha(1);
 	end;
-	MoveMessageCommand=function(self,params)
-		self:finishtweening(); --detiene todas las animaciones
+	-- MoveMessageCommand=function(self,params)
+	-- 	self:finishtweening(); --detiene todas las animaciones
+	-- 	if 	    i==Banners[1] then if params.Dir == 1 then self:linear(.2); end; (InitPos[1])(self);
+	-- 	elseif 	i==Banners[2] then self:linear(.2);(InitPos[2])(self);
+	-- 	elseif 	i==Banners[3] then self:linear(.2);(InitPos[3])(self);
+	-- 	elseif 	i==Banners[4] then self:linear(.2);(InitPos[4])(self);
+	-- 	elseif 	i==Banners[5] then self:linear(.2);(InitPos[5])(self); --center
+	-- 	elseif 	i==Banners[6] then self:linear(.2);(InitPos[6])(self);
+	-- 	elseif 	i==Banners[7] then self:linear(.2);(InitPos[7])(self);
+	-- 	elseif 	i==Banners[8] then self:linear(.2);(InitPos[8])(self);
+	-- 	elseif 	i==Banners[9] then if params.Dir == -1 then self:linear(.2); end; (InitPos[9])(self);
+	-- 	else (cmd(stoptweening;diffusealpha,0))(self);
+	-- 	end;
+	-- end;
+	NextGroupMessageCommand=function(self, params)
+		self:finishtweening();
 		if 	    i==Banners[1] then if params.Dir == 1 then self:linear(.2); end; (InitPos[1])(self);
 		elseif 	i==Banners[2] then self:linear(.2);(InitPos[2])(self);
 		elseif 	i==Banners[3] then self:linear(.2);(InitPos[3])(self);
-		elseif 	i==Banners[4] then self:linear(.2);(InitPos[4])(self);
-		elseif 	i==Banners[5] then self:linear(.2);(InitPos[5])(self); --center
+		elseif 	i==Banners[4] then 
+			self:linear(.15);self:x(-110);self:zoom(.7);self:diffusealpha(.7);self:rotationy(-90);
+			self:linear(0);self:rotationy(90);
+			self:linear(.15);(InitPos[4])(self); --center to left
+		elseif 	i==Banners[5] then 
+			self:linear(.15);self:x(110);self:zoom(.7);self:diffusealpha(.9);self:rotationy(90);
+			self:linear(0);self:rotationy(-90);
+			self:linear(.15);(InitPos[5])(self); --center
 		elseif 	i==Banners[6] then self:linear(.2);(InitPos[6])(self);
 		elseif 	i==Banners[7] then self:linear(.2);(InitPos[7])(self);
 		elseif 	i==Banners[8] then self:linear(.2);(InitPos[8])(self);
@@ -238,7 +258,27 @@ a[#a+1] = Def.Sprite {
 		else (cmd(stoptweening;diffusealpha,0))(self);
 		end;
 	end;
-	StartSelectingSongMessageCommand=function(self,params)
+	PrevGroupMessageCommand=function(self, params)
+		self:finishtweening();
+		if 	    i==Banners[1] then if params.Dir == 1 then self:linear(.2); end; (InitPos[1])(self);
+		elseif 	i==Banners[2] then self:linear(.2);(InitPos[2])(self);
+		elseif 	i==Banners[3] then self:linear(.2);(InitPos[3])(self);
+		elseif 	i==Banners[4] then self:linear(.2);(InitPos[4])(self);			
+		elseif 	i==Banners[5] then 
+			self:linear(.15);self:x(-110);self:zoom(.7);self:diffusealpha(.9);self:rotationy(90);
+			self:linear(0);self:rotationy(-90);
+			self:linear(.15);(InitPos[5])(self); --center to left
+		elseif 	i==Banners[6] then 
+			self:linear(.15);self:x(110);self:zoom(.7);self:diffusealpha(.7);self:rotationy(-90);
+			self:linear(0);self:rotationy(90);
+			self:linear(.15);(InitPos[6])(self); --center
+		elseif 	i==Banners[7] then self:linear(.2);(InitPos[7])(self);
+		elseif 	i==Banners[8] then self:linear(.2);(InitPos[8])(self);
+		elseif 	i==Banners[9] then if params.Dir == -1 then self:linear(.2); end; (InitPos[9])(self);
+		else (cmd(stoptweening;diffusealpha,0))(self);
+		end;
+	end;
+		StartSelectingSongMessageCommand=function(self,params)
 		self:finishtweening();	
 		if 	    i==Banners[1] then (InitPos[1])(self);
 		elseif 	i==Banners[2] then (InitPos[2])(self);self:sleep(.0);self:linear(.15);self:x(-550);self:sleep(0);self:diffusealpha(0);
@@ -252,6 +292,7 @@ a[#a+1] = Def.Sprite {
 		else (cmd(stoptweening;diffusealpha,0))(self);
 		end;
 	end;
+
 	OpenPositionsCommand=function(self)	--comienza la seleccion de grupos
 		self:stoptweening();
 		if 	    i==Banners[1] then (InitPos[1])(self);self:diffusealpha(0);self:x(-550);self:linear(.4);(InitPos[1])(self);
